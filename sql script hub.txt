@@ -1,0 +1,178 @@
+CREATE DATABASE  la société SQLI
+
+                                             -- CREATION DES TABLEAUX --
+
+
+ 1 -- tableau d'utilisateur
+
+CREATE TABLE Utilisateur(
+    nom VARCHAR(50), 
+    email VARCHAR(50),
+    userId int (10) ,
+    role varchar (50), 
+    PRIMARY KEY(user_id),
+    squadId int (10),
+    Foreign Key (squadId) REFERENCES squad(squad_id)
+    )
+ 
+-- insert into the table
+
+INSERT into utilisateur (userId , username , useremail , squadId , role) VALUES 
+(11 , 'nabil' , 'nabil@gmail.com' , 3 , 'leader'),
+(12 , 'zouhair' , 'zouhair@gmail.com' , 3 , 'chef de projet'),
+(13 , 'niaama' , 'niaama@gmail.com' , 3 , 'développeur Fullstack'),
+(14 , 'khaled' , 'khaled@gmail.com' , 3 , 'responsable des ressources'),
+(15 , 'abeljabar', 'abdeljabar@gmail.com' , 4 , 'leader'),
+(16 , 'jen' , 'jen@gmail.com' , 4 , 'chef de projet'),
+(17 , 'mbarek' , 'mbarek@gmail.com' , 4 ,  'responsable des catégories et sous-catégories'),
+(18 , 'bahija' , 'bahija@gmail.com' , 4 , 'développeur Fullstack') , 
+(19 , 'abeljalil' , 'abeljalil@gmail.com' , 5 , 'leader') , 
+(20 , 'nami' , 'nami@gmail.com' , 5 , 'chef de projet') , 
+(21 , 'rabie' , 'rabie@gmail.com' , 5 , 'analyste système') , 
+(22 , 'ussop' , 'ussop@gmail.com' , 5 , ' membre de squad')
+
+
+2 -- tableau du utilisateur leader 
+
+CREATE TABLE userleader (
+id int (10) , 
+userName varchar(50) , 
+usersid int (10)
+)
+
+-- INSERT INTO THE TABLE 
+
+INSERT INTO userleader ( id , userName) values 
+(1 , 'amine' ),
+(2 , 'hamza' ),
+(3 , 'nabil' ),
+(4 , 'abeljabar'),
+(5 , 'abdeljalil')
+
+
+3 -- tableau du squad 
+
+CREATE TABLE squad (
+    squad_id int(10), 
+    squad_name VARCHAR(50),
+    projectId int(10) ,
+    role varchar (50), 
+    PRIMARY KEY(squad_id),
+    Foreign Key (projectId) REFERENCES project(project_id)
+    )
+
+-- insert into the table 
+INSERT INTO squad ( squad_id , squad_name) values 
+(1 , 'codzilla'),
+(2 , 'yakoza') , 
+(3 , 'ronine'),
+(4 , 'super-nova'),
+(5 , 'mugiwara-crow)
+
+
+4 -- tableau du projet 
+
+CREATE TABLE projet ( 
+   project_id int (10) , 
+   project_name varchar (50),
+   project_description varchar (50),
+   start_date varchar(10) ,
+   end_date varchar(10),
+   ressourceId int (10),
+   PRIMARY KEY (project_id),
+   FOREIGN KEY (ressourceId) REFERENCE ressource (ressource_id)
+)
+
+-- insert into the table
+
+INSERT INTO project (project_id , project_name , project_description , start_date , end_date) VALUES
+(1 , PHOTOMASTERS UI , Vous allez migrer un site web existant, actuellement sous la forme dune page unique ("one pager")... , 04/12/2023 , 06/12/2023 ),
+(2 ............)
+
+
+5 -- tableau de ressource --
+
+CREATE TABLE ressource (
+   ressource_id int (10),
+   ressource_name varchar (50),
+   sub_categoryID int (10) ,
+   PRIMARY KEY (ressource_id),
+   FOREIGN KEY (sub-categoryID) REFERENCE sub_category ( sub_category_id)
+)
+
+-- insert into the table 
+
+INSERT INTO ressource ( ressource_id , ressource_name ) values 
+(1 , 'introduction sur html' ) , 
+(2 , 'html , css , javascript') , 
+(3 , 'introduction sur uml et sql'),
+(4 , 'introduction sur uml et sql')
+
+
+6 -- tableau de category --
+
+CREATE TABLE category (
+   category_id int (10) , 
+   category_name varchar (50),
+   PRIMARY KEY (category_id)
+)
+
+--- insert into the table 
+
+INSERT INTO category ( category_id , category_name ) values 
+(1 , 'information technology (IT)' )
+
+
+7 -- table de sous-category --
+
+CREATE TABLE sub_category (
+   sub_category_id int (10),
+   sub_category_name varchar (50),
+   CategoryID int (10),
+   PRIMARY KEY (sub-category_id);
+   FOREIGN KEY (CategoeyID) REFERENCE category (category_id)
+)
+
+-- insert into the table --
+
+INSERT INTO sub_category (sub_category_id , sub_categoey_name) values
+
+(1 , 'front-end'),
+(2 , 'back-end'),
+(3 , 'front-end & back-end')
+)
+
+
+///--- insert into the foreign key column ---///
+
+update utilisateur set squadid = 1 where userID IN (1, 2, 3 , 4 , 5 , 6);
+update utilisateur set squadid = 2 where userID IN (7, 8, 9 , 10 );
+update utilisateur set squadid = 3 where userID IN (11, 12, 13 , 14);
+update utilisateur set squadid = 4 where userID IN (15, 16, 17 , 18 );
+update utilisateur set squadid = 5 where userID IN (19, 20, 21 , 22 );
+
+update userleader set usersid = 2 where id =  1 ;
+update userleader set usersid = 7 where id =  2 ;
+update userleader set usersid = 11 where id = 3 ;
+update userleader set usersid = 15 where id = 4 ;
+update userleader set usersid = 19 where id = 5 ;
+
+update squad set projectId = 5 where squad_id = 1;
+update squad set projectId = 4 where squad_id = 2;
+update squad set projectId = 1 where squad_id = 3;
+update squad set projectId = 2 where squad_id = 4;
+update squad set projectId = 3 where squad_id = 5;
+
+update project set ressourceId = 1 where project_id = 1;
+update project set ressourceId = 2 where project_id = 2;
+update project set ressourceId = 2 where project_id = 3;
+update project set ressourceId = 3 where project_id = 4;
+update project set ressourceId = 4 where project_id = 5;
+
+update ressource set sub_categoryID = 1 where ressource_id = 1 ;
+update ressource set sub_categoryID = 1 where ressource_id = 2 ;
+update ressource set sub_categoryID = 2 where ressource_id = 3 ;
+update ressource set sub_categoryID = 3 where ressource_id = 4 ;
+
+update sub_catigory set CategoryID = 1 ;
+
